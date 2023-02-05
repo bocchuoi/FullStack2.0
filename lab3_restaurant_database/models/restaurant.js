@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const RestaurantSchema = new mongoose.Schema({
-    "address": [{"building": String, "street": String, "zipcode": String}],
+    "address": {"building": String, "street": String, "zipcode": String},
     "city": String,
     "cuisine": String,
     "name": String,
