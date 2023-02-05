@@ -10,14 +10,3 @@ const RestaurantSchema = new mongoose.Schema({
 
 const Restaurant = mongoose.model("Restaurant", RestaurantSchema)
 module.exports = Restaurant
-
-// {
-//     "address": {
-//       "building": "1008",
-//       "street": "Morris Park Ave",
-//       "zipcode": "10462"
-//    },
-//    "city": "Bronx",
-//    "cuisine": "Bakery",
-//    "name": "Morris Park Bake Shop",
-//    "restaurant_id": "30075445"
