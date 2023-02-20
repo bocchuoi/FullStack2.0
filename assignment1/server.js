@@ -1,18 +1,14 @@
 const express = require("express")
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const userRoutes = require('./routes/UserRoute')
-const empRoutes = require('./routes/EmployeeRoute')
-const cors = require('cors');
+const { ApolloServer } = require('apollo-server-express');
 
-const app = express()
-app.use(cors());
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+const typeDefs = require("./GraphQL/TypeDefs")
+const resolvers = require("./GraphQL/Resolvers")
+const server = new ApolloServer({typeDefs, resolvers})
 
-app.use("/api/user", userRoutes)
-app.use("/api/emp", empRoutes)
+app = express()
+server.applyMiddleware({ app });
 
 mongoose.connect(
     // "mongodb://127.0.0.1:27017/employees",
@@ -21,11 +17,6 @@ mongoose.connect(
 );
 
 
-app.route("/")
-    .get((req, res) => {
-        res.send("<h1>Assingment 2</h1>")
-    })
-
-app.listen(8081, () => {
-    console.log("Server is listening on port 8081");
-});
+app.listen(8000, () => {
+    console.log("listening at 8000")
+})
