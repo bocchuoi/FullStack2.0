@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="form.css">
+    </head>
+
+    <body>
+        <script>
+            const login = async () => {
+                try {
+                    const response = fetch('http://localhost:3000/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            // userName: form.userName.value,
+                            // password: form.password.value,
+                            // firstName: form.fisrtName.value,
+                            // lastName: form.lastName.value
+                            "asdasd":"asdasd"
+                        })
+                    });
+                    alert("hey")
+                    const result = await response.json();
+                    if (result.msg === 'success') {
+                        location.reload();
+                    } else {
+                        alert('Could not login');
+                    }
+                } catch(e) {
+                    console.error(e);
+                }
+            };
+        </script>
+        <form method="post" onsubmit="login(this); return false">
+            <h3>Register</h3>
+            <label>First Name</label>
+            <input type="text" name="firstName">
+            <label>Last Name</label>
+            <input type="text" name="lastName">
+            <label>Username</label>
+            <input type="text" placeholder="Username" name="userName">
+            <label>Password</label>
+            <input type="password" placeholder="Password" name="password">
+            <button class="form-button">Register</button>
+        </form>
+    </body>
+</html>
