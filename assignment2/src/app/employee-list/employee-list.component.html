@@ -1,4 +1,4 @@
-<table class="table-auto">
+<!-- <table class="table-auto">
     <thead>
       <tr>
         <th>First Name</th>
@@ -13,4 +13,52 @@
         <td>{{emp.email}}</td>
       </tr>
     </tbody>
-</table>
+</table> -->
+
+<div class="m-20 relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left text-gray-500 text-gray-400">
+      <thead class="text-xs text-white uppercase bg-gray-50 bg-gray-700">
+          <tr>
+              <th scope="col" class="px-6 py-3">
+                  First Name
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Last Name
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Email
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Price
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Action
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr class="border-b bg-gray-50 bg-gray-800 border-gray-700" *ngFor="let emp of employees">
+              <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                  {{emp.firstName}}
+              </th>
+              <td class="px-6 py-4 text-white">
+                  {{emp.lastName}}
+              </td>
+              <td class="px-6 py-4 text-white">
+                  {{emp.email}}
+              </td>
+              <td class="px-6 py-4 text-white">
+                  $2999
+              </td>
+              <td class="px-6 py-4">
+                <button (click)="navigate(emp)" class="mr-2 bg-black text-white font-bold py-1 px-2 rounded">
+                    Update
+                </button>
+                <button class="bg-black text-white font-bold py-1 px-2 rounded">
+                    Update
+                </button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
