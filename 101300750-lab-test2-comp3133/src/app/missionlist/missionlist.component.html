@@ -1,0 +1,17 @@
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" id="basic-addon1">Search</label>
+    </div>
+    <!-- <input [(ngModel)]="search" (ngModelChange)="search($event)" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1"> -->
+    <input [(ngModel)]="searchStr" type="text" class="form-control" placeholder="">
+  </div>
+<ul class="list-group" *ngFor="let item of missionList | missionFilter: searchStr">
+    <li class="list-group-item">
+        <p>{{item.mission_name}}</p>
+        <p>{{item.launch_year}}</p>
+        <p>{{item.details}}</p>
+        <p><img [src]="item.links.mission_patch_small" alt="logo"></p>
+        <button (click)="navigate(item)">Details</button>
+    </li>
+</ul>
