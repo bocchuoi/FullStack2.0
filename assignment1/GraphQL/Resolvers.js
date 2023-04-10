@@ -5,8 +5,7 @@ const userModel = require("../models/UserModel")
 const resolvers = {
     Query: {
         async getAllEmployees() {
-            const employees = await empModel.find()
-            return employees
+            return await empModel.find()
         },
 
         async login(parent, args) {
@@ -20,8 +19,11 @@ const resolvers = {
         },
 
         async getEmployee(parent, args) {
-            const emp = await empModel.findOne({_id:args.eid})
-            return emp
+            return await empModel.findOne({_id:args.eid})
+        },
+
+        async getEmails() {
+            return await empModel.find().select({email: 1})
         }
     },
 
@@ -30,20 +32,21 @@ const resolvers = {
             try {
                 const newUser = new userModel({username:args.username, password:args.password, email:args.email})
                 await newUser.save()
-                return `Account ${args.username} Registered`
+                return `Account Registered`
             }
             catch(e) {
                 console.log(e)
-                return "Account was not registered. Please check error log!"
+                return ((e.code == 11000) ? "The email is already in use!" : "Make sure the fields have less than 50 characters!") 
             }
 
 
         },
         async addEmployee(parent, args) {
             try {
-                const newEmp = empModel({firstName: args.firstName, lastName: args.lastName, email:args.email, gender:args.gender, salary:args.salary})
+                const newEmp = empModel(args.employee)
                 await newEmp.save()
-                return `The employee ${args.firstName} ${args.lastName} is added`
+                // return `The employee ${args.employee.firstName} ${args.employee.lastName} is added`
+                return newEmp
 
             }
             catch(e) {
@@ -53,16 +56,18 @@ const resolvers = {
         },
         async updateEmployee(parent, args) {
             try {
-                const updatedEmp = await empModel.findByIdAndUpdate(args.eid, {firstName: args.firstName, lastName: args.lastName, email:args.email, gender:args.gender, salary:args.salary})
+                // args.employee._id = args.eid
+                const updatedEmp = await empModel.findByIdAndUpdate(args.employee._id, args.employee)
                 if (updatedEmp) {
                     const nb = await updatedEmp.save()
-                    return `The employee ${args.firstName} ${args.lastName} is updated`
+                    return nb
+                    // return `The employee ${args.employee.firstName} ${args.employee.lastName} is updated`
                 }
                 else {
                     return `Couldn't find the employee with ${args.eid} id`
                 }
         
-            } catch (error) {
+            } catch (e) {
                 console.log(e)
                 return "Employee was not updated. Please check error log!"
             }
@@ -71,7 +76,7 @@ const resolvers = {
             try {
                 const deletedEmp = await empModel.findByIdAndDelete(args.eid)
                 if (deletedEmp) {
-                    return `Deleted employee with ${args.eid} id`
+                    return deletedEmp
                 }
                 else {
                     return `Couldn't find the employee with ${args.eid} id`

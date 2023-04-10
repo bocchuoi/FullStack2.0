@@ -15,6 +15,10 @@ const typeDefs = gql`
         username: String!
         email: String!
         password: String! 
+    },
+
+    type Email {
+        email: String!
     }
 
     # Querries
@@ -22,14 +26,32 @@ const typeDefs = gql`
         getAllEmployees: [Employee]
         login(username: String!, password: String!): String
         getEmployee(eid: String!): Employee
+        getEmails: [Email]
+    }
+
+    input InputData {
+        firstName: String!
+        lastName: String!
+        email: String! 
+        gender: String!
+        salary: Float!
+    }
+
+    # email not included for the time being...
+    input UpdateData {
+        _id: String!
+        firstName: String!
+        lastName: String!
+        gender: String!
+        salary: Float!
     }
 
     # Mutations
     type Mutation {
         signup(username: String!, password: String!, email: String!): String
-        addEmployee(firstName: String!, lastName: String!, email: String!, gender: String!, salary: Float!): String
-        updateEmployee(eid: String!, firstName: String!, lastName: String!, email: String!, gender: String!, salary: Float!): String
-        deleteEmployee(eid: String!): String
+        addEmployee(employee: InputData!): Employee!
+        updateEmployee(employee: UpdateData!): Employee!
+        deleteEmployee(eid: String!): Employee!
 
     }
 
